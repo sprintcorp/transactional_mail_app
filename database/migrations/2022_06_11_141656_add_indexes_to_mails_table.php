@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('mails', function (Blueprint $table) {
+        Schema::table('emails', function (Blueprint $table) {
             $table->index(['sender', 'recipient', 'subject']);
         });
     }
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('mails', function (Blueprint $table) {
+        Schema::table('emails', function (Blueprint $table) {
             $table->dropIndex(['sender', 'recipient', 'subject']);
         });
     }

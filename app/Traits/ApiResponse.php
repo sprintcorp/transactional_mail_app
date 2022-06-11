@@ -3,6 +3,7 @@
 
 //use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
@@ -46,7 +47,7 @@ trait ApiResponse
         return $this->successResponse(['data' => $model],$code);
     }
 
-    protected function showOne($model,$code = 200)
+    protected function showModel($model,$code = 200): JsonResponse
     {
         return $this->successResponse($model,$code);
     }

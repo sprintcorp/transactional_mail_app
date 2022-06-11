@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('filename');
             $table->string('original_filename');
-            $table->unsignedBigInteger('mail_id');
-            $table->foreign('mail_id')->references('id')->on('mails');
+            $table->unsignedBigInteger('email_id');
+            $table->foreign('email_id')->references('id')->on('emails');
             $table->timestamps();
         });
     }

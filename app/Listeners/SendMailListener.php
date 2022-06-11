@@ -5,10 +5,9 @@ namespace App\Listeners;
 use App\Events\SendMailEvent;
 use App\Mail\MessageMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendMailListener
+class SendMailListener implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -29,9 +28,11 @@ class SendMailListener
     public function handle(SendMailEvent $event)
     {
         try {
-            Mail::to($event->mailInformation['recipient'])->queue(new MessageMail($event->mailInformation));
+            Mail::to($event->mailInformation->recipient)
+                ->send(new MessageMail($event->mailInformation));
+            $event->mailInformation->setSent();
         }catch (\Exception $exception){
-            return $exception;
+            $event->mailInformation->setFailed($exception->getMessage());
         }
     }
 }

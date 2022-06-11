@@ -4,54 +4,53 @@ namespace App\Http\Controllers;
 
 use App\Http\Interfaces\MailInterface;
 use App\Http\Requests\MailRequest;
-use App\Models\UserMail;
+use App\Models\Email;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class MailController extends Controller
 {
-    public function __construct(protected MailInterface $mail){}
+    public function __construct(protected MailInterface $mailInterface){}
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the mails.
      *
      * @return Response
      */
     public function index()
     {
-        return $this->mail->getMail();
+        return $this->mailInterface->getMail();
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created mail.
      *
      * @param MailRequest $request
      * @return Response
      */
     public function store(MailRequest $request)
     {
-        return $this->mail->createMail($request->all());
+        return $this->mailInterface->createMail($request->all());
     }
 
     /**
-     * Display the specified resource.
+     * Display mail information.
      *
-     * @param UserMail $mail
+     * @param Email $mail
      * @return Response
      */
-    public function show(UserMail $mail)
+    public function show(Email $mail)
     {
-        //
+        return $mail->with('status','attachments')->first();
     }
 
     /**
-     * Update the specified resource in storage.
+     * resend failed mail
      *
-     * @param Request $request
-     * @param UserMail $mail
+     * @param Email $mail
      * @return Response
      */
-    public function update(Request $request, UserMail $mail)
+    public function update(Email $mail)
     {
         //
     }
@@ -59,10 +58,10 @@ class MailController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param UserMail $mail
+     * @param Email $mail
      * @return Response
      */
-    public function destroy(UserMail $mail)
+    public function destroy(Email $mail)
     {
         //
     }

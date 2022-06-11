@@ -6,6 +6,28 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class MailRequest extends FormRequest
 {
+    private $image_extension = [
+        'jpg', 'jpeg', 'png', 'gif', 'ai', 'svg', 'eps', 'ps'
+    ];
+
+    private $audio_extension = [
+        'mp3', 'ogg', 'mpga'
+    ];
+
+    private $video_extension = [
+        'mp4', 'mpeg'
+    ];
+
+    private $document_extension = [
+        'doc', 'docx', 'dotx', 'pdf', 'odt', 'xls', 'xlsm', 'xlsx', 'ppt', 'pptx', 'vsd'
+    ];
+
+
+    private function extensions()
+    {
+        $extensions =  array_merge($this->image_extension, $this->audio_extension, $this->video_extension, $this->document_extension);
+        return implode(',', $extensions);
+    }
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -23,13 +45,15 @@ class MailRequest extends FormRequest
      */
     public function rules()
     {
+        $extensions = $this->extensions();
         return [
             'sender'=>'required|email',
-            'recipient'=>'required|array',
+            'recipient'=>'required|email',
             'subject'=>'required|string',
-            'text_content'=>'nullable|string',
-            'html_content'=>'nullable|string',
-            'attachment'=>'nullable|max:10000|mimes:mp3,mp4,jpg,png,gif,docx,pdf,docs,txt,xlsx,csv,xls',
+            'text_content'=>'sometimes|string',
+            'html_content'=>'sometimes|string',
+            'attachments[].*' => "sometimes|file|mimes:$extensions|max:5000",
+            'attachments.*' => "sometimes|file|mimes:$extensions|max:5000",
         ];
     }
 }

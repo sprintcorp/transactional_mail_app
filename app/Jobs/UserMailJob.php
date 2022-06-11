@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\MessageMail;
-use App\Models\UserMail;
+use App\Models\Email;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,28 +34,6 @@ class UserMailJob implements ShouldQueue
      */
     public function handle()
     {
-//        dd($this->details);
-        try {
-           Mail::to($this->details['recipient'])->send(new MessageMail($this->details));
-            if(Mail::failures()) {
-                Log::info('mail no sent');
-            }
 
-
-//           return response()->json(['message'=>'message sent successfully','status'=>200]);
-        }catch (\Exception $exception){
-            if(Mail::failures()) {
-                foreach ($this->details['recipient'] as $key => $email_address) {
-                    UserMail::create([
-                        'sender' => $this->details['sender'],
-                        'recipient' => $this->details['recipient'][$key],
-                        'subject' => $this->details['subject'],
-                        'text_content' => $this->details['text_content'],
-                        'html_content' => $this->details['html_content'],
-                        'status' => 2,
-                    ]);
-                }
-            }
-        }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\SendMailEvent;
+use App\Listeners\DeliveredMailListener;
 use App\Listeners\SendMailListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -17,10 +18,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
-        ],
         SendMailEvent::class=> [SendMailListener::class],
+        'Illuminate\Mail\Events\MessageSent' => [DeliveredMailListener::class]
     ];
 
     /**
