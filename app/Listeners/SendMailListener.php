@@ -29,7 +29,7 @@ class SendMailListener
     public function handle(SendMailEvent $event)
     {
         try {
-            Mail::to($event->mailInformation['recipient'])->send(new MessageMail($event->mailInformation));
+            Mail::to($event->mailInformation['recipient'])->queue(new MessageMail($event->mailInformation));
         }catch (\Exception $exception){
             return $exception;
         }

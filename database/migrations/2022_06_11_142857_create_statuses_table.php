@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('mails', function (Blueprint $table) {
+        Schema::create('statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('sender');
-            $table->string('recipient');
-            $table->string('subject');
-            $table->text('text_content')->nullable();
-            $table->text('html_content')->nullable();
-            $table->tinyInteger('status')->default(0);
+            $table->string('status');
+            $table->text('description')->nullable();
+            $table->unsignedBigInteger('mail_id');
+            $table->foreign('mail_id')->references('id')->on('mails');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mails');
+        Schema::dropIfExists('statuses');
     }
 };
