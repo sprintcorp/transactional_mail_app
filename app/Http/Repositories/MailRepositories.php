@@ -9,12 +9,11 @@ use App\Http\Interfaces\MailInterface;
 use App\Models\Attachment;
 use App\Models\Email;
 use App\Traits\ApiResponse;
-use App\Traits\FileManager;
 use Illuminate\Support\Facades\DB;
 
 class MailRepositories implements MailInterface
 {
-    use ApiResponse,FileManager;
+    use ApiResponse;
 
     public function createMail($data)
     {

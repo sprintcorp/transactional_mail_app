@@ -37,7 +37,6 @@ class MailController extends Controller
      * Display mail information.
      *
      * @param Email $mail
-     * @return Response
      */
     public function show(Email $mail)
     {
