@@ -41,7 +41,7 @@ class MailController extends Controller
      */
     public function show(Email $mail)
     {
-        return $mail->with('status','attachments')->first();
+        return $mail->with('status','attachments','currentStatus')->first();
     }
 
     /**
@@ -50,19 +50,18 @@ class MailController extends Controller
      * @param Email $mail
      * @return Response
      */
-    public function update(Email $mail)
+    public function resendMail(Email $mail)
     {
-        //
+        return $this->mailInterface->resendMail($mail);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Get recipient mail info
      *
-     * @param Email $mail
-     * @return Response
+     * @param $mail
      */
-    public function destroy(Email $mail)
+    public function getRecipient($mail)
     {
-        //
+        return $this->mailInterface->getRecipient($mail);
     }
 }

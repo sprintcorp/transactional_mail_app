@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Validator;
 
 trait ApiResponse
 {
-    private function successResponse($data,$code)
+    private function successResponse($message,$code)
     {
-        return response()->json(['message' =>$data],$code);
+        return response()->json(['message' => $message],$code);
     }
 
     private function allResponse($data,$code=200)
@@ -31,7 +31,7 @@ trait ApiResponse
         return response()->json(['error' => $message,'code'=>$code],$code);
     }
 
-    protected function showAll($collection,$code = 200,$no = 10)
+    protected function showAll($collection,$no = 10,$code = 200)
     {
         if($no < 1){
             $no = 10;
@@ -43,49 +43,17 @@ trait ApiResponse
         return $this->successResponse($collection,$code);
     }
 
-    public function noPaginate($model,$code = 200){
-        return $this->successResponse(['data' => $model],$code);
-    }
 
-    protected function showModel($model,$code = 200): JsonResponse
+    protected function showModel($model,$message,$code = 200): JsonResponse
     {
-        return $this->successResponse($model,$code);
+        return response()->json(['data'=>$model,'message'=>$message],$code);
     }
 
     protected function showMessage($message,$code = 200)
     {
-        return $this->successResponse(['data' => $message],$code);
+        return $this->successResponse(['message' => $message],$code);
     }
 
-    /**
-     * @param Collection $collection
-     * @param $transformer
-     * @return Collection|mixed
-     */
-    protected function sortData($collection,$transformer)
-    {
-        if(request()->has('sort_by')){
-            $attribute = $transformer::originalAttributes(request()->sort_by);
-            $collection = $collection->sortBy->{$attribute};
-        }
-        return $collection;
-    }
-
-    /**
-     * @param Collection $collection
-     * @param $transformer
-     * @return Collection|mixed
-     */
-    protected function filterData($collection, $transformer)
-    {
-        foreach (request()->query() as $query => $value){
-            $attribute = $transformer::originalAttributes($query);
-            if(isset($attribute,$value)){
-                $collection = $collection->where($attribute,$value);
-            }
-        }
-        return $collection;
-    }
 
     /**
      * @param Collection $collection
@@ -93,7 +61,7 @@ trait ApiResponse
     protected function paginate($collection,$no)
     {
         $rules = [
-          'per_page' => 'integer|min:2|max:50'
+          'per_page' => 'integer|min:5|max:50'
         ];
         Validator::validate(request()->all(),$rules);
         $page = LengthAwarePaginator::resolveCurrentPage();

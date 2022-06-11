@@ -15,3 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('mail',MailController::class);
+Route::put('resend-mail/{mail}',[MailController::class,'resendMail']);
+Route::get('recipient-mail/{mail}',[MailController::class,'getRecipient']);

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Email extends Model
 {
@@ -28,6 +29,13 @@ class Email extends Model
     {
         return $this->hasMany(Status::class)
             ->orderBy('created_at', 'DESC');
+    }
+
+    public function currentStatus(): HasOne
+    {
+        return $this->hasOne(Status::class)
+            ->orderBy('id', 'DESC')
+            ->latest();
     }
 
     public function setPosted($message='Email is queued for sending')
@@ -55,7 +63,6 @@ class Email extends Model
                 'description' => $message
             ]
         );
-        self::query()->update(['status'=>1]);
     }
 
     public function setFailed($message='Email failed')

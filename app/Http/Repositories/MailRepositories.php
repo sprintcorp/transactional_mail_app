@@ -29,7 +29,7 @@ class MailRepositories implements MailInterface
                 $mail->setPosted();
                 event(new SendMailEvent($mail));
             DB::commit();
-                return  $this->showModel($mail,201);
+                return  $this->showModel($mail,'mail created',201);
         }catch(\Exception $exp) {
             DB::rollBack();
             return $this->errorResponse($exp->getMessage(),400);
@@ -39,24 +39,37 @@ class MailRepositories implements MailInterface
 
     public function getMail()
     {
-        return $this->showAll(Email::all(),200);
+        $paginate = request()->get('paginate') ?? 10;
+        $mails = Email::all();
+
+        if(!empty(request()->get('search'))){
+            $mails = Email::whereLike('sender',request()->get('search'))
+                ->whereLike('recipient',request()->get('search'))
+                ->whereLike('subject',request()->get('search'))
+                ->latest()->get();
+        }
+
+        return $this->showAll($mails,$paginate);
     }
 
     /**
-     * @param $data
+     * @param Email $email
      * @return mixed
      */
-    public function resendMail($data)
+    public function resendMail(Email $email)
     {
-
+        $email->setReposted();
+        event(new SendMailEvent($email));
+        return $this->showModel($email,'mail resent',200);
     }
 
     /**
-     * @param $data
-     * @return mixed
+     * @param $mail
      */
-    public function getRecipient($data)
+    public function getRecipient($mail)
     {
-
+        $recipient = Email::with(['status','attachments','currentStatus'])
+            ->where('recipient',$mail)->first();
+        return $this->showModel($recipient,'mail fetched successfully');
     }
 }
