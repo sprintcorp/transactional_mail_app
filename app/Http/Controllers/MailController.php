@@ -40,7 +40,7 @@ class MailController extends Controller
      */
     public function show(Email $mail)
     {
-        return $mail->with('status','attachments','currentStatus')->first();
+        return $mail->getMailInformation($mail->id);
     }
 
     /**

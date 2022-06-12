@@ -5,11 +5,11 @@ import store from './store';
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.js"
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret,faEye,faPaperPlane,faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faUserSecret,faEye,faPaperPlane,faPlus,faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 require('./bootstrap');
-library.add(faUserSecret,faEye,faPaperPlane,faPlus)
+library.add(faUserSecret,faEye,faPaperPlane,faPlus,faArrowLeft)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false
 

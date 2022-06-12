@@ -39,10 +39,10 @@ class MailRepositories implements MailInterface
     public function getMail()
     {
         $paginate = request()->get('paginate') ?? 10;
-        $mails = Email::all();
+        $mails = Email::with('currentStatus')->latest()->get();
 
         if(!empty(request()->get('search'))){
-            $mails = Email::whereLike('sender',request()->get('search'))
+            $mails = Email::with('currentStatus')->whereLike('sender',request()->get('search'))
                 ->whereLike('recipient',request()->get('search'))
                 ->whereLike('subject',request()->get('search'))
                 ->latest()->get();
@@ -67,8 +67,8 @@ class MailRepositories implements MailInterface
      */
     public function getRecipient($mail)
     {
-        $recipient = Email::with(['status','attachments','currentStatus'])
-            ->where('recipient',$mail)->first();
+        $recipient = Email::with(['currentStatus'])
+            ->where('recipient',$mail)->get();
         return $this->showModel($recipient,'mail fetched successfully');
     }
 }

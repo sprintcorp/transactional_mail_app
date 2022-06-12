@@ -22,7 +22,7 @@ export default {
 <style>
     .footer{
         clear: both;
-        position: absolute;
+        /*position: absolute;*/
         bottom: 0;
     }
 </style>

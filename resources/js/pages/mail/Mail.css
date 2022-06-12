@@ -1,0 +1,15 @@
+.card{
+    min-height: 500px !important;
+}
+small{
+    font-size: 10px;
+}
+.stepper .line {
+    width: 2px;
+    background-color: lightgrey !important;
+}
+.stepper  .lead {
+    font-size: 1.1rem;
+}
+
+

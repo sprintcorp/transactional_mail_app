@@ -25,7 +25,7 @@ export default {
 
 <style scoped>
     .container{
-        height: 100vh !important;
+        height: auto !important;
     }
 </style>
 

@@ -31,6 +31,11 @@ class Email extends Model
             ->orderBy('created_at', 'DESC');
     }
 
+    public static function getMailInformation($id)
+    {
+        return self::query()->with(['status','attachments','currentStatus'])->where('id',$id)->first();
+    }
+
     public function currentStatus(): HasOne
     {
         return $this->hasOne(Status::class)

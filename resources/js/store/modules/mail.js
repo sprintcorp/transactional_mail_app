@@ -17,7 +17,6 @@ const actions = {
 
     async[RESEND_MAIL](context,params){
         const {data} = await MailService.resendMail(params);
-        await context.dispatch(GET_RECIPIENT_MAIL, params);
         return data;
     },
 
@@ -33,8 +32,8 @@ const actions = {
         return data;
     },
 
-    async[GET_ALL_MAIL](context,params=''){
-        const {data} = await MailService.getAllMail(params);
+    async[GET_ALL_MAIL](context,payload=''){
+        const {data} = await MailService.getAllMail(payload.search_text,payload.page);
         context.commit(SET_ALL_MAIL,data);
         return data;
     },

@@ -5,8 +5,8 @@ class MailProvider extends BaseHandler{
         return this.post('/api/mail',payload);
     }
 
-    getAllMail(params=''){
-        return this.query('/api/mail?search='+params);
+    getAllMail(params='',page){
+        return this.query('/api/mail?search='+params +'&page='+page);
     }
 
     getMail(params){
@@ -19,7 +19,7 @@ class MailProvider extends BaseHandler{
     }
 
     getRecipient(params){
-        return this.delete('/api/recipient-mail/'+params);
+        return this.get('/api/recipient-mail/'+params);
     }
 }
 export default MailProvider;

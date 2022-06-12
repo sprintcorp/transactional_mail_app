@@ -40,7 +40,7 @@ trait ApiResponse
             return $this->successResponse(['data' => $collection],$code);
         }
         $collection = $this->paginate($collection,$no);
-        return $this->successResponse($collection,$code);
+        return response()->json($collection,$code);
     }
 
 

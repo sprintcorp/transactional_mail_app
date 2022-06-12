@@ -7,12 +7,12 @@
                 </button>
             </div>
             <div class="col-md-8">
-                <input type="text" class="form-control" v-model="search" @keyup="filterMail" placeholder="search sender, recipient, subject">
+                <input type="text" class="form-control" v-model="search" @keyup="getMails" placeholder="search sender, recipient, subject">
             </div>
         </div>
-        {{mails.length}}
+
         <div class="row card p-2">
-            <table class="table table-borderless">
+            <table v-if="!loading && mails.data && mails.data.length > 0" class="table table-borderless">
                 <thead>
                 <tr>
                     <th scope="col"></th>
@@ -24,18 +24,24 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr v-for="(mail,index) in mails.data" :key="index">
                     <th>
                         <input class="form-check-input" type="checkbox" value="" id="">
                     </th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td><font-awesome-icon icon="eye" /></td>
+                    <td>{{mail.sender  }}</td>
+                    <td><a class="pointer" @click="viewRecipient(mail.recipient)">{{mail.recipient}}</a></td>
+                    <td>{{ mail.subject }}</td>
+                    <td>{{mail.current_status.status}}</td>
+                    <td><a  class="pointer" @click="viewEmail(mail.id)"><font-awesome-icon icon="eye"/></a></td>
                 </tr>
                 </tbody>
             </table>
+
+            <LoaderComponent v-if="loading"/>
+        </div>
+
+        <div class="row mt-2 text-center">
+            <PaginationComponent v-on:paginationChange="paginationChange" :link="mails" :action="getMails"/>
         </div>
 
 
@@ -48,30 +54,34 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" v-model="subject" class="form-control" id="subject" placeholder="subject">
+                        </div>
+                        <div class="mb-3">
                             <label for="senderAddress" class="form-label">Sender address</label>
-                            <input type="email" class="form-control" id="senderAddress" placeholder="name@example.com">
+                            <input type="email" v-model="sender" class="form-control" id="senderAddress" placeholder="name@example.com">
                         </div>
 
                         <div class="mb-3">
                             <label for="recipientAddress" class="form-label">Recipient address</label>
-                            <input type="email" class="form-control" id="recipientAddress" placeholder="name@example.com">
+                            <input type="email" v-model="recipient" class="form-control" id="recipientAddress" placeholder="name@example.com">
                         </div>
                         <div class="mb-3">
                             <label for="attachment" class="form-label">Attachment</label>
-                            <input type="file" class="form-control" id="attachment">
+                            <input type="file" @change="onChange" class="form-control" id="attachment" multiple>
                         </div>
                         <div class="mb-3">
                             <label for="message" class="form-label">Message</label>
-                            <textarea class="form-control" id="message" rows="5"></textarea>
+                            <textarea v-model="message" class="form-control" id="message" rows="5"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="htmlContent" class="form-label">HTML Content</label>
-                            <textarea class="form-control" id="htmlContent" rows="7"></textarea>
+                            <textarea v-model="html_content" class="form-control" id="htmlContent" rows="7"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Send <font-awesome-icon icon="paper-plane"/></button>
+                        <button type="button" class="btn btn-primary" @click="sendMail()">Send <font-awesome-icon icon="paper-plane"/></button>
                     </div>
                 </div>
             </div>
