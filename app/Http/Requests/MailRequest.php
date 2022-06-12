@@ -50,10 +50,10 @@ class MailRequest extends FormRequest
             'sender'=>'required|email',
             'recipient'=>'required|email',
             'subject'=>'required|string',
-            'text_content'=>'sometimes|string',
-            'html_content'=>'sometimes|string',
-            'attachments[].*' => "sometimes|file|mimes:$extensions|max:5000",
-            'attachments.*' => "sometimes|file|mimes:$extensions|max:5000",
+            'text_content'=>'nullable|string',
+            'html_content'=>'nullable|string',
+            'attachments[].*' => "nullable|file|mimes:$extensions|max:5000",
+            'attachments.*' => "nullable|file|mimes:$extensions|max:5000",
         ];
     }
 }

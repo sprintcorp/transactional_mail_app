@@ -58,18 +58,12 @@ export default {
             })
         },
         onChange(event){
-            this.attachments = event.target.files
-            // console.log(this.attachments);
-            const formData = new FormData();
-            for (const i of Object.keys(this.attachments)) {
-                formData.append('attachments', this.attachments[i])
-            }
-            console.log(formData);
+            this.attachments = event.target.files;
         },
         sendMail(){
             const formData = new FormData();
             for (const i of Object.keys(this.attachments)) {
-                formData.append('attachments', this.attachments[i])
+                formData.append('attachments[]', this.attachments[i])
             }
             formData.append('sender',this.sender);
             formData.append('recipient',this.recipient);

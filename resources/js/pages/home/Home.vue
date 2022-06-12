@@ -31,13 +31,24 @@
                     <td>{{mail.sender  }}</td>
                     <td><a class="pointer" @click="viewRecipient(mail.recipient)">{{mail.recipient}}</a></td>
                     <td>{{ mail.subject }}</td>
-                    <td>{{mail.current_status.status}}</td>
+                    <td><span :class="(mail.current_status.status.toLowerCase() ==='sent')
+                    ? 'badge text-bg-success':(mail.current_status.status.toLowerCase() ==='failed') ?
+                     'badge text-bg-danger': 'badge text-bg-light'">{{ mail.current_status.status }}</span>
+                    </td>
                     <td><a  class="pointer" @click="viewEmail(mail.id)"><font-awesome-icon icon="eye"/></a></td>
                 </tr>
                 </tbody>
             </table>
 
             <LoaderComponent v-if="loading"/>
+
+<!--            {{mails.data.length}}-->
+
+            <div class="card" v-if="!loading && mails.data && mails.data.length < 1">
+                <div class="card-body text-center">
+                    No Data Found.
+                </div>
+            </div>
         </div>
 
         <div class="row mt-2 text-center">
@@ -68,7 +79,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="attachment" class="form-label">Attachment</label>
-                            <input type="file" @change="onChange" class="form-control" id="attachment" multiple>
+                            <input type="file" id="upload-file" @change="onChange" class="form-control" multiple>
                         </div>
                         <div class="mb-3">
                             <label for="message" class="form-label">Message</label>

@@ -43,7 +43,7 @@ class Email extends Model
             ->latest();
     }
 
-    public function setPosted($message='Email is queued for sending')
+    public function setPosted($message='Mail posted')
     {
         $this->status()->create([
                 'status' => self::$STATUS_POSTED,
@@ -52,7 +52,7 @@ class Email extends Model
         );
     }
 
-    public function setReposted($message='Email is queued again for sending')
+    public function setReposted($message='Mail reposted')
     {
         $this->status()->create([
                 'status' => self::$STATUS_REPOSTED,
@@ -61,7 +61,7 @@ class Email extends Model
         );
     }
 
-    public function setSent($message='Email is sent')
+    public function setSent($message='Mail sent')
     {
         $this->status()->create([
                 'status' => self::$STATUS_SENT,
@@ -70,7 +70,7 @@ class Email extends Model
         );
     }
 
-    public function setFailed($message='Email failed')
+    public function setFailed($message='Mail failed')
     {
         $this->status()->create([
                 'status' => self::$STATUS_FAILED,
