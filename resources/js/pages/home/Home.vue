@@ -1,0 +1,86 @@
+<template>
+    <div>
+        <div class="row mb-3 py-5">
+            <div class="col-md-2">
+                <button class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Compose <font-awesome-icon icon="plus"/>
+                </button>
+            </div>
+            <div class="col-md-8">
+                <input type="text" class="form-control" v-model="search" @keyup="filterMail" placeholder="search sender, recipient, subject">
+            </div>
+        </div>
+        {{mails.length}}
+        <div class="row card p-2">
+            <table class="table table-borderless">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Sender</th>
+                    <th scope="col">Recipient</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>
+                        <input class="form-check-input" type="checkbox" value="" id="">
+                    </th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td><font-awesome-icon icon="eye" /></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h5 class="modal-title" id="staticBackdropLabel">Compose mail</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="senderAddress" class="form-label">Sender address</label>
+                            <input type="email" class="form-control" id="senderAddress" placeholder="name@example.com">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="recipientAddress" class="form-label">Recipient address</label>
+                            <input type="email" class="form-control" id="recipientAddress" placeholder="name@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="attachment" class="form-label">Attachment</label>
+                            <input type="file" class="form-control" id="attachment">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" rows="5"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="htmlContent" class="form-label">HTML Content</label>
+                            <textarea class="form-control" id="htmlContent" rows="7"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Send <font-awesome-icon icon="paper-plane"/></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script src="./Home.js"></script>
+
+<style lang="css" scoped>
+@import "Home.css";
+</style>
