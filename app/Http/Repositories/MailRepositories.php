@@ -5,10 +5,14 @@ namespace App\Http\Repositories;
 
 
 use App\Events\SendMailEvent;
+use App\Filters\Recipient;
+use App\Filters\Sender;
+use App\Filters\Subject;
 use App\Http\Interfaces\MailInterface;
 use App\Models\Attachment;
 use App\Models\Email;
 use App\Traits\ApiResponse;
+use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\DB;
 
 class MailRepositories implements MailInterface
@@ -38,17 +42,17 @@ class MailRepositories implements MailInterface
 
     public function getMail()
     {
-        $paginate = request()->get('paginate') ?? 10;
-        $mails = Email::with('currentStatus')->latest()->get();
+        $mails = app(Pipeline::class)
+            ->send(Email::query()->with('currentStatus'))
+            ->through([
+                Recipient::class,
+                Sender::class,
+                Subject::class
+            ])
+            ->thenReturn()
+            ->get();
 
-        if(!empty(request()->get('search'))){
-            $mails = Email::with('currentStatus')->whereLike('sender',request()->get('search'))
-                ->whereLike('recipient',request()->get('search'))
-                ->whereLike('subject',request()->get('search'))
-                ->latest()->get();
-        }
-
-        return $this->showAll($mails,$paginate);
+        return $this->showAll($mails);
     }
 
     /**
