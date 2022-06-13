@@ -17,7 +17,7 @@
                     </p>
 
                     <a href="#" class="btn btn-primary" v-if="!loading && mail.current_status.status.toLowerCase() === 'failed'" @click="resendMail(mail.id)">Resend</a>
-                    <button class="btn btn-primary" v-if="loading && mail.current_status.status.toLowerCase()" type="button" disabled>
+                    <button class="btn btn-primary" v-if="loading" type="button" disabled>
                         Sending...
                         <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                     </button>
@@ -49,9 +49,9 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card px-5">
+            <div class="card px-3">
                 <div class="stepper d-flex flex-column mt-5">
-                    <div class="d-flex mb-1" v-for="(status,index) in mail.status" :key="index">
+                    <div class="d-flex mb-2" v-for="(status,index) in mail.status" :key="index">
                         <div class="d-flex flex-column pr-4 align-items-center">
                             <span :class="(status.status.toLowerCase() ==='sent')
                     ? 'badge text-bg-success':(status.status.toLowerCase() ==='failed') ?
@@ -59,7 +59,7 @@
                             <div class="line h-100"></div>
                         </div>
                         <div>
-                            <small class="lead text-muted pb-3">{{ status.description }}</small>
+                            <small class="pb-3">{{ status.description }}</small>
                         </div>
                     </div>
                 </div>

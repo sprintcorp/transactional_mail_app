@@ -25,8 +25,9 @@ export default {
         resendMail(id){
             this.loading = true;
             this.$store.dispatch(RESEND_MAIL,id)
-                .then(()=>{
-                this.getMail(id);
+                .then((res)=>{
+                    this.$swal(res.message);
+                    this.getMail(id);
             }).catch((e)=>{
 
             });

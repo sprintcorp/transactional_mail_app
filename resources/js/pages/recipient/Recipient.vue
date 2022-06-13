@@ -17,7 +17,10 @@
             </th>
             <td>{{mail.sender  }}</td>
             <td>{{ mail.subject }}</td>
-            <td>{{mail.current_status.status}}</td>
+            <td><span :class="(mail.current_status.status.toLowerCase() ==='sent')
+                    ? 'badge text-bg-success':(mail.current_status.status.toLowerCase() ==='failed') ?
+                     'badge text-bg-danger': 'badge text-bg-light'">{{ mail.current_status.status }}</span>
+            </td>
             <td><a  class="pointer" @click="viewEmail(mail.id)"><font-awesome-icon icon="eye"/></a></td>
         </tr>
         </tbody>
