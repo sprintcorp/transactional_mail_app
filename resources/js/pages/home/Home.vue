@@ -64,6 +64,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="error">
+                            <strong v-for="(error,index) in errors" :key="index">{{ error }}<br/></strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
                         <div class="mb-3">
                             <label for="subject" class="form-label">Subject</label>
                             <input type="text" v-model="subject" class="form-control" id="subject" placeholder="subject">
@@ -79,7 +84,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="attachment" class="form-label">Attachment</label>
-                            <input type="file" id="upload-file" @change="onChange" class="form-control" multiple>
+                            <input type="file" id="attachment" @change="onChange" class="form-control" multiple>
                         </div>
                         <div class="mb-3">
                             <label for="message" class="form-label">Message</label>

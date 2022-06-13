@@ -20,6 +20,8 @@ export default {
             message:'',
             html_content:'',
             attachments:[],
+            error:false,
+            errors:[],
         }
     },
     watch:{
@@ -61,6 +63,8 @@ export default {
             this.attachments = event.target.files;
         },
         sendMail(){
+            this.errors = [];
+            this.error = false;
             const formData = new FormData();
             for (const i of Object.keys(this.attachments)) {
                 formData.append('attachments[]', this.attachments[i])
@@ -71,14 +75,17 @@ export default {
             formData.append('text_content',this.message);
             formData.append('subject',this.subject);
             this.$store.dispatch(CREATE_MAIL, formData).then(
-                () => {
-                    alert(" Mail Created");
+                (res) => {
+                    this.$swal(res.message);
                     this.getMails();
-                },
-                () => {
-                    alert(" Mail Created");
                 }
-            );
+            ).catch((e)=>{
+                this.error = true;
+                if (e.response && e.response.status === 422) {
+                    const errors = Object.values(e.response.data.error);
+                    this.errors = errors.flatMap(val=>val);
+                }
+            });
         },
         paginationChange(no){
             this.page = no;
