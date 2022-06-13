@@ -15,7 +15,7 @@ class MailRequest extends FormRequest
     ];
 
     private $video_extension = [
-        'mp4', 'mpeg'
+        'mp4', 'mpeg','avi','mkv'
     ];
 
     private $document_extension = [

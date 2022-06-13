@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('subject');
             $table->text('text_content')->nullable();
             $table->text('html_content')->nullable();
-            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }

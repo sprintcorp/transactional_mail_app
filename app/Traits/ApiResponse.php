@@ -1,7 +1,6 @@
 <?php
  namespace App\Traits;
 
-//use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
@@ -16,15 +15,6 @@ trait ApiResponse
         return response()->json(['message' => $message],$code);
     }
 
-    private function allResponse($data,$code=200)
-    {
-        return response()->json($data,$code);
-    }
-
-    protected function showModelWithMessage($model,$message,$code=200)
-    {
-        return response()->json(['message' => $message,'data'=>$model],$code);
-    }
 
     protected function errorResponse($message,$code)
     {
@@ -47,11 +37,6 @@ trait ApiResponse
     protected function showModel($model,$message,$code = 200): JsonResponse
     {
         return response()->json(['data'=>$model,'message'=>$message],$code);
-    }
-
-    protected function showMessage($message,$code = 200)
-    {
-        return $this->successResponse(['message' => $message],$code);
     }
 
 

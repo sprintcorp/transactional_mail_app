@@ -1,8 +1,8 @@
 import axios from "axios";
-import {BASE_URL} from '../env';
+// import {BASE_URL} from '../env';
 
 const baseHandler = axios.create({
-    baseURL: BASE_URL,
+    // baseURL: BASE_URL,
     timeout: 1000000
 });
 
