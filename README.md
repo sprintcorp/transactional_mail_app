@@ -1,6 +1,6 @@
 # Getting started
 
-##Brief description
+## Brief description
 
 The minisend is a transactional email application that allows users to send emails to users emails and provides sender with status of the action performed.
 Transactional emails are mails that helps informs users on status of action performed, e.g mails users get upon purchase of items can be classified as a transactional mail. 
